@@ -1,24 +1,23 @@
 var gui = new dat.GUI();
 var params = {
-    widthHead: 200,
-    heightHead: 229,
+    randomSeed: 0,
+    nb: 100,
     Download_Image: function () { return save(); },
 };
-gui.add(params, "widthHead", 200, 1000, 1);
-gui.add(params, "heightHead", 229, 1000, 1);
+gui.add(params, "randomSeed", 0, 200, 1);
+gui.add(params, "nb", 0, 500, 1);
 gui.add(params, "Download_Image");
 function draw() {
-    background('green');
-    fill('yellow');
-    rectMode(CENTER);
+    randomSeed(params.randomSeed);
+    background('black');
+    fill(255, 255, 255, 50);
     noStroke();
-    rect(width / 2, height - 200, 700, 300);
-    fill('red');
-    triangle((width / 2) - 350, height - 350, (height / 2), (width / 2) - 100, (width / 2) + 350, height - 350);
-    fill('darkred');
-    triangle((width / 2) + 380, height - 370, (height / 2), (width / 2) - 100, (width / 2) + 350, height - 350);
-    fill('orange');
-    quad((width / 2) + 380, height - 370, (width / 2) + 350, height - 350, (width / 2) + 350, height - 50, (width / 2) + 380, height - 70);
+    translate(width / 2, height / 2);
+    for (var i = 0; i < params.nb; i++) {
+        var angle = random(TWO_PI);
+        var radius = randomGaussian(0, 200);
+        ellipse(radius * cos(angle), radius * sin(angle), 25);
+    }
 }
 function setup() {
     p6_CreateCanvas();
